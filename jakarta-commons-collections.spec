@@ -34,7 +34,7 @@
 
 Name:		jakarta-%{short_name}
 Version:	3.2.1
-Release:	3.4%{?dist}
+Release:	3.5%{?dist}
 Epoch:		0
 Summary:	Provides new interfaces, implementations and utilities for Java Collections
 License:	ASL 2.0
@@ -46,6 +46,7 @@ Source6:	collections-tomcat5-build.xml
 Patch0:         %{name}-javadoc-nonet.patch
 Patch1:         commons-collections-3.2-project_xml.patch
 Patch4:         commons-collections-3.2-build_xml.patch
+Patch5:         CVE-2015-7501.patch
 
 URL:            http://jakarta.apache.org/commons/%{base_name}/
 BuildRequires:	ant
@@ -112,6 +113,7 @@ find . -name "*.jar" -exec rm -f {} \;
 %patch0 -p1
 %patch1 -b .sav
 %patch4 -b .sav
+%patch5 -p1
 cp %{SOURCE6} .
 
 # Fix file eof
@@ -185,6 +187,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_javadocdir}/%{name}-testframework
 
 %changelog
+* Fri Nov 20 2015 Michal Srb <msrb@redhat.com> - 0:3.2.1-3.5
+- Fix Java object de-serialization vulnerability
+- Resolves: CVE-2015-7501
+
 * Wed Feb 10 2010 Alexander Kurtakov <akurtako@redhat.com> 0:3.2.1-3.4
 - BR openjdk to fix OOM.
 
